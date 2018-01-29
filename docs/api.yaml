@@ -1,0 +1,108 @@
+openapi: "3.0.0"
+info:
+  version: 0.0.1
+  title: Akka Http Animal Service
+paths:
+  /animals:
+    get:
+      description: |
+        Returns all animals.
+      responses:
+        200:
+          description: A successful response containing an array of animals.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnimalResponseBody'
+    post:
+      description: Creates a new animal. Duplicates are allowed
+      requestBody:
+        description: Animal to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnimalRequestBody'
+      responses:
+        '201':
+          description: Animal created response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimalResponseBody'
+  /animals/{id}:
+    get:
+      description: Returns an animal by ID.
+      parameters:
+        - name: id
+          in: path
+          description: ID of an animal to fetch
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Animal response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimalResponseBody'
+    delete:
+      description: deletes a single animal by ID.
+      parameters:
+        - name: id
+          in: path
+          description: ID of an animal to delete.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Animal deleted.
+components:
+  schemas:
+    AnimalRequestBody:
+      required:
+        - name
+        - age
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
+      example: {
+        "name": "doggy dog",
+        "age": 6
+      }
+    AnimalResponseBody:
+      required:
+        - name
+        - age
+        - id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+      example: {
+          "id": "abbf13",
+          "name": "doggy dog",
+          "age": 6
+        }
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      value: {
+        "code": 400,
+        "message": "Bad request"
+      }

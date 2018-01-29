@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  db:
+    image: mongo
+    expose:
+      - 27017
+  microservice:
+    image: akka-http-animal-service:0.1.0-SNAPSHOT
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL=mongodb://db

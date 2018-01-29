@@ -1,0 +1,13 @@
+app:
+  image:
+    name: 0000bartek/akka-http-animal-service
+    tag: latest
+  port: 8080
+  serviceType: NodePort
+
+db:
+  image:
+    name: mongo
+    tag: latest
+  port: 27017
+  serviceType: ClusterIP
