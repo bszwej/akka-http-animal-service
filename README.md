@@ -11,7 +11,7 @@ In this example, you can see how to:
 - deploy it on Kubernetes using Helm chart
 - prepare e2e tests suite and configure SBT to run them
 - trace requests using Kamon and Jaeger
-- and many more!
+- ... and more
 
 ## Running
 
@@ -19,19 +19,19 @@ In this example, you can see how to:
 1. `cd akka-http-animal-service`
 1. `sbt dockerComposeUp`
 
-It'll run docker-compose and spin up the microservice as well as MongoDB instance. 
+It runs `docker-compose` and spins up the microservice as well as MongoDB instance. 
 You can find the API documentation [here](./docs/api.yaml).
 
 ## Deployment
 
-In the `deployment` directory, you can find a Helm chart. You can use it to deploy this microservice on k8s cluster.
+In the `deployment` directory, you can find Helm chart. You can use it to deploy this microservice on k8s.
 
-Install on Kubernetes w/ Helm chart:
+Install on Kubernetes using Helm chart:
 
 1. `helm install --name default-mongo stable/mongodb`
 1. `helm install --name akka-http-animal-service deployment/helm`
 
-This is obviously not a production deployment. However, it can be useful to play with locally on Minikube.
+This is not a production deployment. However, it can be useful to play with locally on Minikube.
 
 ## Testing
 
@@ -47,4 +47,4 @@ In order to run e2e tests:
 1. `e2e:tests` 
 
 You can point e2e tests to a different host with `url` flag:
-- `sbt -Durl=http://animal-svc.com:9088 e2e:test`
+- `sbt -Durl=http://192.168.99.100:32733 e2e:test`
