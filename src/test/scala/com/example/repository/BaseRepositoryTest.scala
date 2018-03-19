@@ -20,16 +20,16 @@ trait BaseRepositoryTest
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val duration = Duration(3, TimeUnit.SECONDS)
+  private val defaultDuration = Duration(3, TimeUnit.SECONDS)
 
   override protected def beforeEach(): Unit = {
-    Await.ready(collection.flatMap(_.drop(failIfNotFound = false)), duration)
+    Await.ready(collection.flatMap(_.drop(failIfNotFound = false)), defaultDuration)
     ()
   }
 
   override protected def afterAll(): Unit = {
-    Await.ready(collection.flatMap(_.drop(failIfNotFound = false)), duration)
-    Await.ready(connection.map(_.askClose()(duration)), duration)
+    Await.ready(collection.flatMap(_.drop(failIfNotFound = false)), defaultDuration)
+    Await.ready(connection.map(_.askClose()(defaultDuration)), defaultDuration)
     ()
   }
 }

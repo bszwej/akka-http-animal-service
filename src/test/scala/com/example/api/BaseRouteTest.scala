@@ -34,4 +34,5 @@ trait BaseRouteTest
   }
 
   val routes: Route = api.routes
+
 }
