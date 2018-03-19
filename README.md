@@ -22,6 +22,8 @@ In this example, you can see how to:
 It runs `docker-compose` and spins up the microservice as well as MongoDB instance. 
 You can find the API documentation [here](./docs/api.yaml).
 
+In order to stop: `sbt dockerComposeStop`.
+
 ## Deployment
 
 In the `deployment` directory, you can find Helm chart. You can use it to deploy this microservice on k8s.
@@ -45,6 +47,7 @@ In order to run e2e tests:
 1. Open up sbt shell: `sbt` 
 1. `dockerComposeUp`
 1. `e2e:tests` 
+1. `dockerComposeStop`
 
 You can point e2e tests to a different host with `url` flag:
 - `sbt -Durl=http://192.168.99.100:32733 e2e:test`
