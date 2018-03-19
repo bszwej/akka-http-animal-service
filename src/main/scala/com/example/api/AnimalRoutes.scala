@@ -9,21 +9,26 @@ import akka.http.scaladsl.server.directives.PathDirectives.path
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import com.example.api.model.{AnimalRequest, RequestMetadata}
 import com.example.controller.AnimalController
+import kamon.akka.http.TracingDirectives
 
-class AnimalRoutes(animalController: AnimalController) extends JsonSupport {
+class AnimalRoutes(animalController: AnimalController) extends JsonSupport with TracingDirectives {
 
   lazy val animalRoutes: Route =
     pathPrefix("animals") {
       pathEnd {
         get {
-          complete(animalController.findAll.value)
+          operationName("get-animals") {
+            complete(animalController.findAll.value)
+          }
         } ~
           post {
             entity(as[AnimalRequest]) { animalRequest =>
               optionalHeaderValueByType[`User-Agent`](()) { userAgent ⇒
                 extractClientIP { remoteAddress ⇒
-                  val requestMetadata = prepareRequestMetadata(userAgent, remoteAddress)
-                  complete(animalController.create(animalRequest, requestMetadata).value)
+                  operationName("insert-animal") {
+                    val requestMetadata = prepareRequestMetadata(userAgent, remoteAddress)
+                    complete(animalController.create(animalRequest, requestMetadata).value)
+                  }
                 }
               }
             }
@@ -31,10 +36,14 @@ class AnimalRoutes(animalController: AnimalController) extends JsonSupport {
       } ~
         path(Segment) { id =>
           get {
-            complete(animalController.getById(id).value)
+            operationName("get-animal-by-id") {
+              complete(animalController.getById(id).value)
+            }
           } ~
             delete {
-              complete(animalController.delete(id).value)
+              operationName("delete-animal") {
+                complete(animalController.delete(id).value)
+              }
             }
         }
     }

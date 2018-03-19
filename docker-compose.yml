@@ -5,6 +5,15 @@ services:
     image: mongo
     expose:
       - 27017
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    expose:
+      - 14268
+      - 16686
+    ports:
+      - 16686:16686
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
   microservice:
     image: akka-http-animal-service:0.1.0-SNAPSHOT
     ports:
@@ -13,3 +22,4 @@ services:
       - db
     environment:
       - MONGO_URL=mongodb://db
+      - JAEGER_HTTP_HOST=jaeger

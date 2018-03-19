@@ -7,7 +7,7 @@ The goal of this project is to show how to build a microservice using Scala and 
 In this example, you can see how to:
 - marshal/unmarshal http JSON responses/requests with circe
 - handle errors
-- use Monad Transformer in real-world example
+- use Monad Transformer in a real-world use case
 - deploy it on Kubernetes using Helm chart
 - prepare e2e tests suite and configure SBT to run them
 - trace requests using Kamon and Jaeger
@@ -51,3 +51,12 @@ In order to run e2e tests:
 
 You can point e2e tests to a different host with `url` flag:
 - `sbt -Durl=http://192.168.99.100:32733 e2e:test`
+
+## Jaeger tracing
+
+This project uses Kamon to trace requests. After running the project using `sbt dockerComposeUp`, you can open Jaeger dashboard `http://localhost:16686/`.
+
+![](jaeger-trace-list-screen.png)
+
+
+![](jaeger-trace-screen.png)
