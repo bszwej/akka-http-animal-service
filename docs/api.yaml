@@ -5,8 +5,7 @@ info:
 paths:
   /animals:
     get:
-      description: |
-        Returns all animals.
+      description: Returns all animals.
       responses:
         200:
           description: A successful response containing an array of animals.
@@ -17,7 +16,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/AnimalResponseBody'
     post:
-      description: Creates a new animal. Duplicates are allowed
+      description: Creates a new animal.
       requestBody:
         description: Animal to be created.
         required: true
@@ -32,6 +31,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AnimalResponseBody'
+        '400':
+          description: |
+            Bad request. For example, it can occur when request body is wrong, malformed, or headers are missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
   /animals/{id}:
     get:
       description: Returns an animal by ID.
@@ -49,8 +55,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AnimalResponseBody'
+        '400':
+          description: Animal with given ID not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
     delete:
-      description: deletes a single animal by ID.
+      description: Deletes a single animal by ID.
       parameters:
         - name: id
           in: path
@@ -67,20 +79,25 @@ components:
       required:
         - name
         - age
+        - kind
       properties:
         name:
           type: string
         age:
           type: integer
+        kind:
+          type: string
       example: {
-        "name": "doggy dog",
-        "age": 6
+        "name": "Charlie",
+        "age": 16,
+        "kind": "Unicorn"
       }
     AnimalResponseBody:
       required:
+        - id
         - name
         - age
-        - id
+        - kind
       properties:
         id:
           type: string
@@ -88,21 +105,29 @@ components:
           type: string
         age:
           type: integer
+        kind:
+          type: string
       example: {
           "id": "abbf13",
-          "name": "doggy dog",
-          "age": 6
+          "name": "Charlie",
+          "kind": "Unicorn",
+          "age": 16
         }
-    Error:
+    BadRequest:
       required:
-        - code
         - message
       properties:
-        code:
-          type: integer
         message:
           type: string
-      value: {
-        "code": 400,
-        "message": "Bad request"
+      example: {
+        "message": "Bad request."
+      }
+    NotFound:
+      required:
+        - message
+      properties:
+        message:
+          type: string
+      example: {
+        "message": "Animal not found."
       }
