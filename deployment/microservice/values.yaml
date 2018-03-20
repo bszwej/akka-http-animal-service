@@ -2,6 +2,7 @@ image:
   name: 0000bartek/akka-http-animal-service
   tag: latest
 port: 8080
+nodePort: 31000
 serviceType: NodePort
 
 mongo:

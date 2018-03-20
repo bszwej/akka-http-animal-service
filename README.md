@@ -15,11 +15,31 @@ In this example, you can see how to:
 
 ## Running
 
-1. `git clone https://github.com/bszwej/akka-http-animal-service.git`
-1. `cd akka-http-animal-service`
-1. `sbt dockerComposeUp`
+1. Clone the repository
+```bash
+git clone https://github.com/bszwej/akka-http-animal-service.git
+```
 
-It runs `docker-compose` and spins up the microservice as well as MongoDB instance. 
+1. Change dir 
+```bash
+cd akka-http-animal-service
+```
+
+1. Run docker compose using sbt. It spins up the microservice, MongoDB and Jaeger. 
+
+```bash
+sbt dockerComposeUp
+```
+
+1. Make some calls:
+
+```bash
+curl -X POST -H 'Content-Type: application/json' -d '{"name": "Charlie", "kind": "Unicorn", "age": 21}' http://localhost:8080/animals
+curl http://localhost:8080/animals
+```
+
+1. Now go to Jaeger dashboard `http://192.168.99.100:31001` and see new traces.
+
 You can find the API documentation [here](./docs/api.yaml).
 
 In order to stop: `sbt dockerComposeStop`.
@@ -36,7 +56,10 @@ Install on Kubernetes using Helm chart:
 
 This is not a production deployment. However, it can be useful to play with locally on Minikube.
 
-When running on Minikube, Jaeger dashboard is accessible by default under `http://192.168.99.100:31000`.
+When running on Minikube:
+
+- Service is accessible under `http://192.168.99.100:31000`
+- Jaeger dashboard is accessible under `http://192.168.99.100:31001`
 
 ## Testing
 
@@ -53,7 +76,7 @@ In order to run e2e tests:
 1. `dockerComposeStop`
 
 You can point e2e tests to a different host with `url` flag:
-- `sbt -Durl=http://192.168.99.100:32733 e2e:test`
+- `sbt -Durl=http://192.168.99.100:31000 e2e:test`
 
 ## Jaeger tracing
 
