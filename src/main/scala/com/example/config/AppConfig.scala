@@ -13,4 +13,6 @@ trait AppConfig {
   val dbName: String = config.getString("mongo.dbName")
   val collectionName: String = config.getString("mongo.collectionName")
 
+  val jaegerEnabled: Boolean = config.getBoolean("kamon.jaeger.enabled")
+
 }

@@ -2,11 +2,11 @@ version: "3"
 
 services:
   db:
-    image: mongo
+    image: mongo:3.6.3
     expose:
       - 27017
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/all-in-one:1.2.0
     expose:
       - 14268
       - 16686
@@ -22,4 +22,5 @@ services:
       - db
     environment:
       - MONGO_URL=mongodb://db
+      - JAEGER_ENABLED=true
       - JAEGER_HTTP_HOST=jaeger

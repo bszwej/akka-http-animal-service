@@ -31,9 +31,12 @@ In the `deployment` directory, you can find Helm chart. You can use it to deploy
 Install on Kubernetes using Helm chart:
 
 1. `helm install --name default-mongo stable/mongodb`
-1. `helm install --name akka-http-animal-service deployment/helm`
+1. `helm install --name jaeger-standalone deployment/jaeger`
+1. `helm install --name akka-http-animal-service deployment/microservice`
 
 This is not a production deployment. However, it can be useful to play with locally on Minikube.
+
+When running on Minikube, Jaeger dashboard is accessible by default under `http://192.168.99.100:31000`.
 
 ## Testing
 

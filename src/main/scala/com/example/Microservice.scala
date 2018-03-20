@@ -22,7 +22,10 @@ object Microservice
     with AppConfig
     with SLF4JLogging {
 
-  Kamon.addReporter(new JaegerReporter)
+  if (jaegerEnabled) {
+    log.info("Jaeger reporter enabled.")
+    Kamon.addReporter(new JaegerReporter)
+  }
 
   implicit val system: ActorSystem = ActorSystem("AkkaHttpCatService")
   implicit val materializer: Materializer = ActorMaterializer()

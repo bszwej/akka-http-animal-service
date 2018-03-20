@@ -1,0 +1,6 @@
+image:
+  name: jaegertracing/all-in-one
+  tag: 1.2.0
+uiPort: 16686
+uiNodePort: 31000
+collectorPort: 14268

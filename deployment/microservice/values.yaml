@@ -1,0 +1,12 @@
+image:
+  name: 0000bartek/akka-http-animal-service
+  tag: latest
+port: 8080
+serviceType: NodePort
+
+mongo:
+  url: "mongodb://default-mongo-mongodb:27017"
+
+jaeger:
+  enabled: true
+  host: "jaeger-standalone-collector"

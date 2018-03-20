@@ -17,11 +17,15 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.app.image.name }}:{{ .Values.app.image.tag }}"
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           env:
             - name: MONGO_URL
-              value: "mongodb://default-mongo-mongodb.default.svc.cluster.local:27017"
+              value: {{ .Values.mongo.url }}
+            - name: JAEGER_HTTP_HOST
+              value: {{ .Values.jaeger.host }}
+            - name: JAEGER_ENABLED
+              value: "{{ .Values.jaeger.enabled }}"
           ports:
             - name: http
-              containerPort: {{ .Values.app.port }}
+              containerPort: {{ .Values.port }}
               protocol: TCP
